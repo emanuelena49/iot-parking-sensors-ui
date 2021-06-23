@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
 import DistanceMQTTClient from './DistanceMQTTClient';
+import './DistanceNumbers.scss';
 
 /**
  * The single label. It has a name and a className and contains a 
@@ -38,13 +39,13 @@ class DistanceNumbers extends Component {
         return (
             <div className="distance-numbers-bar">
                 <div className="distance-labels-container">
-                    <DistanceLabel name={"LEFT"} className="distance-label-left" >
+                    <DistanceLabel name={"left"} className="distance-label-left" >
                         <DistanceMQTTClient topicName={"left"} />
                     </DistanceLabel>
-                    <DistanceLabel name={"CENTER"} className="distance-label-center" >
+                    <DistanceLabel name={"center"} className="distance-label-center" >
                         <DistanceMQTTClient topicName={"center"} />
                     </DistanceLabel>
-                    <DistanceLabel name={"CENTER"} className="distance-label-right" >
+                    <DistanceLabel name={"right"} className="distance-label-right" >
                         <DistanceMQTTClient topicName={"right"} />
                     </DistanceLabel>
                 </div>
@@ -54,3 +55,4 @@ class DistanceNumbers extends Component {
 }
 
 export default DistanceNumbers;
+export {DistanceNumbers};

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import round from "../../utils/round";
 
 var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://test.mosquitto.org')
+var client  = mqtt.connect('mqtt://test.mosquitto.org:8080');
 
 /**
  * An mqtt client which displays an updated distance value 
@@ -18,7 +18,7 @@ class DistanceMQTTClient extends Component {
     }
 
     constructor(props) {
-        super(prosp);
+        super(props);
 
         this.state = {
             /** the last value received from mqtt topic */
@@ -32,13 +32,15 @@ class DistanceMQTTClient extends Component {
      */
     updateValue(newValue) {
 
+        // let newValueStr = newValue;
+
         // value in meters (and rounded)
         newValue = round(newValue/100, 2);
 
         // TODO: real code for real mqtt client
             
         // get recieved value as str
-        let newValueStr = message; /*newValue.toString();
+        let newValueStr = newValue; newValue.toString();
 
         // add missing zeros
         for (let i=newValueStr.length; i<4; i++) {
@@ -46,40 +48,52 @@ class DistanceMQTTClient extends Component {
         }
 
         // add measure units (meters)
-        newValueStr += "m";*/
+        newValueStr += "m";
 
         // set the new value (update state so component will re-render)
-        this.setState((state, props) => ({
+        this.setState({
             value: newValueStr, 
-        }));
+        });
     }
 
     componentDidMount() {
+
+        // alert("ok");
         
+        let thisObject = this;
+
         // connect and subscribe
         client.on('connect', function () {
-            client.subscribe('presence', function (err) {
+            client.subscribe(this.props.topicName, function (err) {
               if (!err) {
-                client.publish('presence', 'Hello mqtt')
+                // client.publish('presence', 'Hello mqtt');
+                console.log("ok, subscribed to " + thisObject.props.topicName);
+              } else {
+                console.error("cannot subscribe to " + thisObject.props.topicName, err);
               }
             })
         });
 
-        let thisObject = this;
-
+        // listen for messages
         client.on('message', function (topic, message) {
 
-            if (topic == thisObject.props.topicName) {
+            // alert("received " + message + " on " + topic);
+            if (topic === thisObject.props.topicName) {
                 // when I recieved message on this topic I update the component
                 thisObject.updateValue(message);
             }
         });
     }
+
+    componentWillUnmount() {
+        // (unsubscribe)
+        client.unsubscribe(this.props.topicName);
+    }
     
     render () {
         // just print (a fresh) value
         // (it will re-render every time I recieve a message)
-        return this.state.value;
+        return <span>{this.state.value + ""}</span>;
     }
 }
 
