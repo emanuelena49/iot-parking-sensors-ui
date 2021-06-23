@@ -1,14 +1,18 @@
-const react = require("react");
+import {Component} from 'react';
+import PropTypes from 'prop-types';
+import DistanceMQTTClient from './DistanceMQTTClient';
 
 /**
- * @argument {react.Component<Props, State>}
+ * The single label. It has a name and a className and contains a 
+ * generic child.
+ * 
+ * @arguments {Component<Props, State>}
  */
-class DistanceLabel extends react.Component {
+class DistanceLabel extends Component {
 
     static propTypes = {
-        name: PropTypes.number, 
-        value: String, 
-        className: String, 
+        name: PropTypes.string, 
+        className: PropTypes.string, 
     }
 
     render() {
@@ -18,22 +22,31 @@ class DistanceLabel extends react.Component {
                     {this.props.name}
                 </div>
                 <div className="distance-label-value">
-                    {this.props.value}
+                    {this.props.children}
                 </div>
             </div>
         );
     }
 }
 
-class DistanceNumbers extends react.Component {
+/**
+ * A fixed bottom bar which displays the 3 distances
+ */
+class DistanceNumbers extends Component {
 
     render() {
         return (
             <div className="distance-numbers-bar">
                 <div className="distance-labels-container">
-                    <DistanceLabel name={"LEFT"} value={"2.50m"} className="distance-label-left" />
-                    <DistanceLabel name={"CENTER"} value={"2.50m"} className="distance-label-center" />
-                    <DistanceLabel name={"CENTER"} value={"-.--m"} className="distance-label-right" />
+                    <DistanceLabel name={"LEFT"} className="distance-label-left" >
+                        <DistanceMQTTClient topicName={"left"} />
+                    </DistanceLabel>
+                    <DistanceLabel name={"CENTER"} className="distance-label-center" >
+                        <DistanceMQTTClient topicName={"center"} />
+                    </DistanceLabel>
+                    <DistanceLabel name={"CENTER"} className="distance-label-right" >
+                        <DistanceMQTTClient topicName={"right"} />
+                    </DistanceLabel>
                 </div>
             </div>
         );
