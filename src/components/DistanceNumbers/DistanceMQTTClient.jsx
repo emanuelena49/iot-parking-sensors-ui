@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import round from "../../utils/round";
 
 var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://test.mosquitto.org:8080');
+var client  = mqtt.connect('mqtt://192.168.1.133:8883');
+// var client = mqtt.connect("ws://test.mosquitto.org:8883");
+
 
 /**
  * An mqtt client which displays an updated distance value 
@@ -61,15 +63,16 @@ class DistanceMQTTClient extends Component {
         // alert("ok");
         
         let thisObject = this;
+        let topicName = this.props.topicName;
 
         // connect and subscribe
         client.on('connect', function () {
-            client.subscribe(this.props.topicName, function (err) {
+            client.subscribe(topicName, function (err) {
               if (!err) {
                 // client.publish('presence', 'Hello mqtt');
-                console.log("ok, subscribed to " + thisObject.props.topicName);
+                console.log("ok, subscribed to " + topicName);
               } else {
-                console.error("cannot subscribe to " + thisObject.props.topicName, err);
+                console.error("cannot subscribe to " + topicName, err);
               }
             })
         });
@@ -77,10 +80,12 @@ class DistanceMQTTClient extends Component {
         // listen for messages
         client.on('message', function (topic, message) {
 
+            // alert(topic, message);
+
             // alert("received " + message + " on " + topic);
-            if (topic === thisObject.props.topicName) {
+            if (topic === topicName) {
                 // when I recieved message on this topic I update the component
-                thisObject.updateValue(message);
+                thisObject.updateValue(parseInt(message));
             }
         });
     }

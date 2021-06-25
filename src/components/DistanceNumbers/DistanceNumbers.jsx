@@ -40,13 +40,13 @@ class DistanceNumbers extends Component {
             <div className="distance-numbers-bar">
                 <div className="distance-labels-container">
                     <DistanceLabel name={"left"} className="distance-label-left" >
-                        <DistanceMQTTClient topicName={"left"} />
+                        <DistanceMQTTClient topicName={"distances/left"} />
                     </DistanceLabel>
                     <DistanceLabel name={"center"} className="distance-label-center" >
-                        <DistanceMQTTClient topicName={"center"} />
+                        <DistanceMQTTClient topicName={"distances/center"} />
                     </DistanceLabel>
                     <DistanceLabel name={"right"} className="distance-label-right" >
-                        <DistanceMQTTClient topicName={"right"} />
+                        <DistanceMQTTClient topicName={"distances/right"} />
                     </DistanceLabel>
                 </div>
             </div>
