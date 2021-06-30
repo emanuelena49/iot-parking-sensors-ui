@@ -32,21 +32,35 @@ class DistanceLabel extends Component {
 
 /**
  * A fixed bottom bar which displays the 3 distances
+ * 
+ * @arguments {Component<Props, State>}
  */
 class DistanceNumbers extends Component {
+
+    static propTypes = {
+        topicNames: PropTypes.object
+    }
+
+    static defaultProps = {
+        topicNames: {
+            "left": "/distances/left", 
+            "center": "/distances/center", 
+            "right": "/distances/right"
+        }
+    }
 
     render() {
         return (
             <div className="distance-numbers-bar">
                 <div className="distance-labels-container">
                     <DistanceLabel name={"left"} className="distance-label-left" >
-                        <DistanceMQTTClient topicName={"distances/left"} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["left"]} />
                     </DistanceLabel>
                     <DistanceLabel name={"center"} className="distance-label-center" >
-                        <DistanceMQTTClient topicName={"distances/center"} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["center"]} />
                     </DistanceLabel>
                     <DistanceLabel name={"right"} className="distance-label-right" >
-                        <DistanceMQTTClient topicName={"distances/right"} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["right"]} />
                     </DistanceLabel>
                 </div>
             </div>
