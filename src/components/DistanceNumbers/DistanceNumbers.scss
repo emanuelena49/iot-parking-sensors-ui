@@ -1,0 +1,36 @@
+.distance-numbers-bar {
+    display: block;
+    position: relative;
+    padding: 5px 10px;
+    background-color: beige;
+    
+    .distance-labels-container {
+        display: flexbox;
+        align-items: stretch;
+        .distance-label {
+            display: inline-block;
+            width: 32%;
+            border-left: 1px solid grey;
+            border-right: 1px solid grey;
+
+            & > * {
+                display: block;
+                text-align: center;
+                width: fit-content;
+                margin: 0 auto;
+            }
+            
+            .distance-label-name {
+                padding: 10px 0;
+                font-size: 1.14em;
+                text-transform: uppercase;
+            }
+
+            .distance-label-value {
+                padding: 5px 0;
+                font-size: 1.4em;
+                font-weight: bold;
+            }
+        }
+    }
+}
