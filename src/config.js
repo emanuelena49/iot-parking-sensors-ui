@@ -1,11 +1,11 @@
 var config = {
     "mqtt": {
         "address": "", 
-        "topics": [
-            "/distances/left", 
-            "/distances/center", 
-            "/distances/right"
-        ]
+        "topics": {
+            "left": "/distances/left", 
+            "center": "/distances/center", 
+            "right": "/distances/right"
+        }
     }, 
     "video": {
         "address": "", 

@@ -67,7 +67,7 @@ class DistanceMQTTClient extends Component {
 
         // connect and subscribe
         this.client.on('connect', function () {
-            client.subscribe(topicName, function (err) {
+            thisObject.client.subscribe(topicName, function (err) {
               if (!err) {
                 // client.publish('presence', 'Hello mqtt');
                 console.log("ok, subscribed to " + topicName);

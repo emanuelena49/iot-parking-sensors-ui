@@ -75,8 +75,8 @@ class StreamingVideoPlayer extends Component {
         
         return (
             <div className="streaming-video-player" id="video-player">
-                <div className="stream-container" className={"frame-container " + containerClass}>
-                    <img src={this.props.source} /> 
+                <div className={"frame-container " + containerClass}>
+                    <img src={this.props.source} alt="No video available!" /> 
                 </div>
             </div>
         );
