@@ -38,7 +38,8 @@ class DistanceLabel extends Component {
 class DistanceNumbers extends Component {
 
     static propTypes = {
-        topicNames: PropTypes.object
+        topicNames: PropTypes.object, 
+        brokerAddress: PropTypes.string, 
     }
 
     static defaultProps = {
@@ -46,7 +47,8 @@ class DistanceNumbers extends Component {
             "left": "/distances/left", 
             "center": "/distances/center", 
             "right": "/distances/right"
-        }
+        }, 
+        brokerAddress: "mqtt://192.168.1.133:8883"
     }
 
     render() {
@@ -54,13 +56,16 @@ class DistanceNumbers extends Component {
             <div className="distance-numbers-bar">
                 <div className="distance-labels-container">
                     <DistanceLabel name={"left"} className="distance-label-left" >
-                        <DistanceMQTTClient topicName={this.props.topicNames["left"]} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["left"]} 
+                            brokerAddress={this.props.brokerAddress} />
                     </DistanceLabel>
                     <DistanceLabel name={"center"} className="distance-label-center" >
-                        <DistanceMQTTClient topicName={this.props.topicNames["center"]} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["center"]} 
+                            brokerAddress={this.props.brokerAddress} />
                     </DistanceLabel>
                     <DistanceLabel name={"right"} className="distance-label-right" >
-                        <DistanceMQTTClient topicName={this.props.topicNames["right"]} />
+                        <DistanceMQTTClient topicName={this.props.topicNames["right"]} 
+                            brokerAddress={this.props.brokerAddress} />
                     </DistanceLabel>
                 </div>
             </div>
