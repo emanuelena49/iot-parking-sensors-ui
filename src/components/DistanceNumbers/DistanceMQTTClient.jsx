@@ -1,9 +1,6 @@
 import { Component } from "react";
 import PropTypes from 'prop-types';
 import round from "../../utils/round";
-
-var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://192.168.1.133:8883');
 // var client = mqtt.connect("ws://test.mosquitto.org:8883");
 
 
@@ -17,6 +14,7 @@ class DistanceMQTTClient extends Component {
 
     static propTypes = {
         topicName: PropTypes.string, 
+        brokerAddress: PropTypes.string, 
     }
 
     constructor(props) {
@@ -61,13 +59,15 @@ class DistanceMQTTClient extends Component {
     componentDidMount() {
 
         // alert("ok");
+        this.mqtt = require('mqtt');
+        this.client  = this.mqtt.connect(this.props.brokerAddress);
         
         let thisObject = this;
         let topicName = this.props.topicName;
 
         // connect and subscribe
-        client.on('connect', function () {
-            client.subscribe(topicName, function (err) {
+        this.client.on('connect', function () {
+            thisObject.client.subscribe(topicName, function (err) {
               if (!err) {
                 // client.publish('presence', 'Hello mqtt');
                 console.log("ok, subscribed to " + topicName);
@@ -78,7 +78,7 @@ class DistanceMQTTClient extends Component {
         });
 
         // listen for messages
-        client.on('message', function (topic, message) {
+        this.client.on('message', function (topic, message) {
 
             // alert(topic, message);
 
@@ -92,7 +92,7 @@ class DistanceMQTTClient extends Component {
 
     componentWillUnmount() {
         // (unsubscribe)
-        client.unsubscribe(this.props.topicName);
+        this.client.unsubscribe(this.props.topicName);
     }
     
     render () {
